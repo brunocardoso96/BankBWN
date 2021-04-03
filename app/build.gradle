@@ -11,6 +11,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
+    dataBinding {
+        enable = true
+    }
+
     defaultConfig {
         applicationId "dominando.android.bankbwn"
         minSdkVersion 19

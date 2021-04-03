@@ -7,7 +7,7 @@
     <data>
         <variable
             name="date"
-            type="com.example.bankaccentur.data.model.StatementResponse" />
+            type="dominando.android.bankbwn.model.statement.StatementResponse" />
     </data>
 
     <LinearLayout
