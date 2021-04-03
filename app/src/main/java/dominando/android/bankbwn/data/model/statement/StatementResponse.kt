@@ -1,4 +1,4 @@
-package dominando.android.bankbwn.model.statement
+package dominando.android.bankbwn.data.model.statement
 
 import com.squareup.moshi.JsonClass
 import java.text.DecimalFormat

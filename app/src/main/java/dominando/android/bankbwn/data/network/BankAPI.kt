@@ -1,7 +1,7 @@
-package dominando.android.bankbwn.network
+package dominando.android.bankbwn.data.network
 
 import com.example.bankaccentur.data.model.UserResponse
-import dominando.android.bankbwn.model.statement.StatementListResponse
+import dominando.android.bankbwn.data.model.statement.StatementListResponse
 import io.reactivex.Observable
 import retrofit2.http.*
 

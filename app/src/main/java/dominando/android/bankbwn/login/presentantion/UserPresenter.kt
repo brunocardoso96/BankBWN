@@ -3,7 +3,7 @@ package dominando.android.bankbwn.login.presentantion
 import android.util.Log
 import com.example.bankaccentur.data.model.UserResponse
 import dominando.android.bankbwn.login.Login
-import dominando.android.bankbwn.model.RemoteDataSourceLogin
+import dominando.android.bankbwn.data.model.RemoteDataSourceLogin
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver

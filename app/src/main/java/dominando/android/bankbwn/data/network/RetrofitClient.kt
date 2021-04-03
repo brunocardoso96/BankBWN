@@ -1,4 +1,4 @@
-package dominando.android.bankbwn.network
+package dominando.android.bankbwn.data.network
 
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -11,6 +11,12 @@ object RetrofitClient {
     val serviceLogin = Retrofit.Builder()
         .baseUrl(BANK_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+        .create(BankAPI::class.java)
+
+    val serviceStatement = Retrofit.Builder()
+        .baseUrl(BANK_BASE_URL)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
         .create(BankAPI::class.java)

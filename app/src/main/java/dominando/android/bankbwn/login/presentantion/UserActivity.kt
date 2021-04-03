@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.bankaccentur.data.model.UserResponse
 import dominando.android.bankbwn.R
 import dominando.android.bankbwn.login.Login
-import dominando.android.bankbwn.model.RemoteDataSourceLogin
+import dominando.android.bankbwn.data.model.RemoteDataSourceLogin
 import kotlinx.android.synthetic.main.activity_user.*
 
 class UserActivity : AppCompatActivity(), Login.View {

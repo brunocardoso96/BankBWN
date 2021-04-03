@@ -12,7 +12,7 @@ android {
     buildToolsVersion "29.0.3"
 
     dataBinding {
-        enable = true
+        enabled true
     }
 
     defaultConfig {
@@ -75,4 +75,7 @@ dependencies {
 
     //Materia Design
     implementation 'com.google.android.material:material:1.2.0-alpha03'
+
+    // dataBinding
+    kapt 'com.android.databinding:compiler:3.1.3'
 }
