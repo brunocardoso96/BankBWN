@@ -9,13 +9,14 @@ import com.example.bankaccentur.data.model.UserResponse
 import dominando.android.bankbwn.R
 import dominando.android.bankbwn.login.Login
 import dominando.android.bankbwn.data.model.RemoteDataSourceLogin
+import dominando.android.bankbwn.statement.presentation.BankActivity
 import kotlinx.android.synthetic.main.activity_user.*
 
 class UserActivity : AppCompatActivity(), Login.View {
 
     lateinit var buttonLogin: Button
 
-    lateinit var userPresenter: UserPresenter
+    lateinit var presenter: UserPresenter
 
     private val TAG = "loginBank"
 
@@ -24,6 +25,11 @@ class UserActivity : AppCompatActivity(), Login.View {
         setContentView(R.layout.activity_user)
 
         init()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.stop()
     }
 
     private fun init() {
@@ -35,7 +41,7 @@ class UserActivity : AppCompatActivity(), Login.View {
 
     private fun setupPresenter() {
         val dataSource = RemoteDataSourceLogin()
-        userPresenter = UserPresenter(this, dataSource)
+        presenter = UserPresenter(this, dataSource)
     }
 
     fun findView() {
@@ -67,11 +73,11 @@ class UserActivity : AppCompatActivity(), Login.View {
     }
 
     override fun goToDashboard(user: UserResponse) {
-//            val intent = BankMainActivity.getStartIntent(this@UserActivity)
+            val intent = BankActivity.getStartIntent(this@UserActivity)
                         intent.putExtra("EXTRA_userId", user.userId.toString())
                         intent.putExtra("EXTRA_userId", user.userId.toString())
                         intent.putExtra("EXTRA_name", user.name)
-                        intent.putExtra("EXTRA_bankAccount", user.agency)
+                        intent.putExtra("EXTRA_bankAccount", user.agency).toString()
                         intent.putExtra("EXTRA_agency", user.bankAccount)
                         intent.putExtra("EXTRA_balance", user.balance.toString())
                     this@UserActivity.startActivity(intent)

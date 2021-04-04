@@ -11,10 +11,6 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
-    dataBinding {
-        enabled true
-    }
-
     defaultConfig {
         applicationId "dominando.android.bankbwn"
         minSdkVersion 19
@@ -37,6 +33,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -75,7 +75,4 @@ dependencies {
 
     //Materia Design
     implementation 'com.google.android.material:material:1.2.0-alpha03'
-
-    // dataBinding
-    kapt 'com.android.databinding:compiler:3.1.3'
 }

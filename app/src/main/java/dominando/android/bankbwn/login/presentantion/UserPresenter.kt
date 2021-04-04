@@ -17,7 +17,7 @@ class UserPresenter(
     private val dataSource: RemoteDataSourceLogin
 ) : Login.Presenter{
 
-    private val TAG = "HomePresenter"
+    private val TAG = "BANK_BWM"
     private val compositeDisposable = CompositeDisposable()
 
     //Retorno da API
