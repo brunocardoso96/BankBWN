@@ -1,6 +1,7 @@
 package dominando.android.bankbwn.login
 
 import com.example.bankaccentur.data.model.UserResponse
+import dominando.android.bankbwn.data.model.login.UserAccountResponse
 
 interface Login {
 
@@ -11,6 +12,6 @@ interface Login {
 
     interface View {
         fun displayError(message: String)
-        fun goToDashboard(user: UserResponse)
+        fun getUser(user: UserResponse)
     }
 }

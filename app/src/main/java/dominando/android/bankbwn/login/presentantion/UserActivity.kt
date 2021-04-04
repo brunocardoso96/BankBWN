@@ -1,15 +1,12 @@
 package dominando.android.bankbwn.login.presentantion
 
-import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bankaccentur.data.model.UserResponse
 import dominando.android.bankbwn.R
-import dominando.android.bankbwn.data.model.RemoteDataSourceLogin
 import dominando.android.bankbwn.login.Login
 import dominando.android.bankbwn.statement.presentation.BankActivity
 import kotlinx.android.synthetic.main.activity_user.*
@@ -48,8 +45,7 @@ class UserActivity : AppCompatActivity(), Login.View {
     }
 
     private fun setupPresenter() {
-        val dataSource = RemoteDataSourceLogin()
-        presenter = UserPresenter(this, dataSource)
+        presenter = UserPresenter(this)
     }
 
     fun findView() {
@@ -72,7 +68,7 @@ class UserActivity : AppCompatActivity(), Login.View {
         showToast(message)
     }
 
-    override fun goToDashboard(user: UserResponse) {
+    override fun getUser(user: UserResponse) {
         val intent = BankActivity.getStartIntent(this@UserActivity)
         buttonLogin.setOnClickListener {
             intent.putExtra("EXTRA_userId", user.userId.toString())

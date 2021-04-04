@@ -1,56 +1,42 @@
 package dominando.android.bankbwn.login.presentantion
 
-import android.util.Log
-import com.example.bankaccentur.data.model.UserResponse
+import dominando.android.bankbwn.data.model.login.UserAccountResponse
+import dominando.android.bankbwn.data.network.BankAPI
+import dominando.android.bankbwn.data.network.RetrofitClient
 import dominando.android.bankbwn.login.Login
-import dominando.android.bankbwn.data.model.RemoteDataSourceLogin
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 import java.util.*
 import java.util.regex.Pattern
 
 
 class UserPresenter(
-    private val view: Login.View,
-    private val dataSource: RemoteDataSourceLogin
+    private val view: Login.View
 ) : Login.Presenter{
 
     private val TAG = "BANK_BWM"
     private val compositeDisposable = CompositeDisposable()
-
-    //Retorno da API
-    private val autenticUserObserver: DisposableObserver<UserResponse>
-    get() = object : DisposableObserver<UserResponse>() {
-        override fun onNext(t: UserResponse) {
-            view.goToDashboard(t)
-        }
-
-        override fun onError(e: Throwable) {
-            view.displayError("Erro ao Logar")
-        }
-
-        override fun onComplete() {
-            println("Complete")
-        }
-    }
 
     override fun stop() {
         compositeDisposable.clear()
     }
 
     override fun getAutenticLogin(user: String, pass: String) {
-//        if(verifyUser(user = user, pass = pass)) {
-            val disposable = dataSource.autenticLogin(user, pass)
-                .subscribeOn(Schedulers.io())
-                .observeOn((AndroidSchedulers.mainThread()))
-                .subscribeWith(autenticUserObserver)
+        RetrofitClient.serviceLogin.postAutenticUser(user, pass).enqueue(object: Callback<UserAccountResponse> {
+            override fun onResponse(call: Call<UserAccountResponse>, response: Response<UserAccountResponse>) {
+                response.body()?.let { userAccountResponse ->
+                    val user = userAccountResponse.userAccount
+                    view.getUser(user)
+                }
+            }
+            override fun onFailure(call: Call<UserAccountResponse>, t: Throwable) {
+                view.displayError("Erro ao acessa o LOGIN")
+            }
 
-            compositeDisposable.add(disposable)
-//        } else {
-//            view.displayError("Erro ao acessa")
-//        }
+        })
     }
 
     fun verifyUser(user: String, pass: String): Boolean {

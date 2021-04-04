@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bankaccentur.data.helper.FormatAccont
 import com.example.bankaccentur.data.helper.FormatBalance
 import dominando.android.bankbwn.R
-import dominando.android.bankbwn.data.model.RemoteDataSourceStatement
 import dominando.android.bankbwn.data.model.statement.StatementResponse
 import dominando.android.bankbwn.statement.Statement
 import dominando.android.bankbwn.statement.presentation.adapter.BankAdapter
@@ -44,8 +43,7 @@ class BankActivity : AppCompatActivity(), Statement.View {
     }
 
     private fun setupPresenter() {
-        val dataSource = RemoteDataSourceStatement()
-        presenter = BankPresenter(this, dataSource)
+        presenter = BankPresenter(this)
     }
 
     override fun onStop() {

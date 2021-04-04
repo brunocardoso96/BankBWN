@@ -1,49 +1,47 @@
 package dominando.android.bankbwn.statement.presentation
 
 import android.util.Log
-import dominando.android.bankbwn.data.model.RemoteDataSourceStatement
+import dominando.android.bankbwn.data.model.statement.StatementListResponse
 import dominando.android.bankbwn.data.model.statement.StatementResponse
+import dominando.android.bankbwn.data.network.RetrofitClient
 import dominando.android.bankbwn.statement.Statement
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BankPresenter(
-        private val view: Statement.View,
-        private val dataSource: RemoteDataSourceStatement
+        private val view: Statement.View
 ) : Statement.Presenter {
     private val TAG = "BANK_BWM"
     private val compositeDisposable = CompositeDisposable()
 
-    //Retorno da API
-    private val statementListObserver: DisposableObserver<List<StatementResponse>>
-        get() = object : DisposableObserver<List<StatementResponse>>() {
-            override fun onNext(statementList: List<StatementResponse>) {
-                view.displayStatement(statementList)
-            }
-
-            override fun onError(e: Throwable) {
-                Log.i(TAG, "onError")
-            }
-
-            override fun onComplete() {
-                Log.i(TAG, "onComplete")
-            }
-
-        }
 
     override fun stop() {
         compositeDisposable.clear()
     }
 
     override fun getStatement(userId: Int) {
-            val disposable = dataSource.statementList(userId)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn((AndroidSchedulers.mainThread()))
-                    .subscribeWith(statementListObserver)
+        RetrofitClient.serviceStatement.getStatement(userId).enqueue(object: Callback<StatementListResponse> {
+            override fun onResponse(call: Call<StatementListResponse>, response: Response<StatementListResponse>) {
+                if(response.isSuccessful) {
+                    val lists: MutableList<StatementResponse> = mutableListOf()
+                    response.body()?.let{statementListResponse ->
+                        for(result in statementListResponse.statementList) {
+                            val listaState = result.getStatementModel()
+                            lists.add(listaState)
+                        }
+                        view.displayStatement(lists)
+                    }
+                }
+            }
+            override fun onFailure(call: Call<StatementListResponse>, t: Throwable) {
+            }
+        })
 
-            compositeDisposable.add(disposable)
-        }
+    }
 
 }
