@@ -1,10 +1,8 @@
 package dominando.android.bankbwn.statement.presentation
 
 import android.util.Log
-import com.example.bankaccentur.data.model.UserResponse
-import dominando.android.bankbwn.data.model.RemoteDataSourceLogin
 import dominando.android.bankbwn.data.model.RemoteDataSourceStatement
-import dominando.android.bankbwn.data.model.statement.StatementListResponse
+import dominando.android.bankbwn.data.model.statement.StatementResponse
 import dominando.android.bankbwn.statement.Statement
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -19,10 +17,10 @@ class BankPresenter(
     private val compositeDisposable = CompositeDisposable()
 
     //Retorno da API
-    private val statementListObserver: DisposableObserver<StatementListResponse>
-        get() = object : DisposableObserver<StatementListResponse>() {
-            override fun onNext(t: StatementListResponse) {
-                Log.i(TAG, "onNext")
+    private val statementListObserver: DisposableObserver<List<StatementResponse>>
+        get() = object : DisposableObserver<List<StatementResponse>>() {
+            override fun onNext(statementList: List<StatementResponse>) {
+                view.displayStatement(statementList)
             }
 
             override fun onError(e: Throwable) {

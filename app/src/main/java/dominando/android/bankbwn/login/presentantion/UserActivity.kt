@@ -1,14 +1,16 @@
 package dominando.android.bankbwn.login.presentantion
 
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bankaccentur.data.model.UserResponse
 import dominando.android.bankbwn.R
-import dominando.android.bankbwn.login.Login
 import dominando.android.bankbwn.data.model.RemoteDataSourceLogin
+import dominando.android.bankbwn.login.Login
 import dominando.android.bankbwn.statement.presentation.BankActivity
 import kotlinx.android.synthetic.main.activity_user.*
 
@@ -36,7 +38,13 @@ class UserActivity : AppCompatActivity(), Login.View {
         findView()
         saveShared()
         setupPresenter()
-        clickButtonLogin()
+        loginclickButton()
+    }
+
+    fun loginclickButton() {
+        buttonLogin.setOnClickListener{
+            presenter.getAutenticLogin(user = "brunowcnascimento@gmail.com", pass = "@Aa2")
+        }
     }
 
     private fun setupPresenter() {
@@ -46,6 +54,7 @@ class UserActivity : AppCompatActivity(), Login.View {
 
     fun findView() {
         buttonLogin = findViewById(R.id.buttonLogin)
+
     }
 
     private fun saveShared() {
@@ -59,39 +68,24 @@ class UserActivity : AppCompatActivity(), Login.View {
         textViewPass.setText(passSave)
     }
 
-
-    private fun clickButtonLogin() {
-        buttonLogin = findViewById(R.id.buttonLogin)
-        buttonLogin.setOnClickListener {
-
-
-        }
-    }
-
     override fun displayError(message: String) {
         showToast(message)
     }
 
     override fun goToDashboard(user: UserResponse) {
-            val intent = BankActivity.getStartIntent(this@UserActivity)
-                        intent.putExtra("EXTRA_userId", user.userId.toString())
-                        intent.putExtra("EXTRA_userId", user.userId.toString())
-                        intent.putExtra("EXTRA_name", user.name)
-                        intent.putExtra("EXTRA_bankAccount", user.agency).toString()
-                        intent.putExtra("EXTRA_agency", user.bankAccount)
-                        intent.putExtra("EXTRA_balance", user.balance.toString())
-                    this@UserActivity.startActivity(intent)
+        val intent = BankActivity.getStartIntent(this@UserActivity)
+        buttonLogin.setOnClickListener {
+            intent.putExtra("EXTRA_userId", user.userId.toString())
+            intent.putExtra("EXTRA_name", user.name)
+            intent.putExtra("EXTRA_bankAccount", user.agency).toString()
+            intent.putExtra("EXTRA_agency", user.bankAccount)
+            intent.putExtra("EXTRA_balance", user.balance.toString())
+            this@UserActivity.startActivity(intent)
+        }
     }
 
     private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        Log.i("BANK_BWN", message)
     }
 }
-
-
-
-
-
-//        }
-//    }
-

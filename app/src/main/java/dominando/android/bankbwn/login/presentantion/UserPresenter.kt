@@ -24,16 +24,15 @@ class UserPresenter(
     private val autenticUserObserver: DisposableObserver<UserResponse>
     get() = object : DisposableObserver<UserResponse>() {
         override fun onNext(t: UserResponse) {
-            Log.i(TAG, "onNext")
             view.goToDashboard(t)
         }
 
         override fun onError(e: Throwable) {
-            Log.i(TAG, "onError")
+            view.displayError("Erro ao Logar")
         }
 
         override fun onComplete() {
-
+            println("Complete")
         }
     }
 
@@ -42,16 +41,16 @@ class UserPresenter(
     }
 
     override fun getAutenticLogin(user: String, pass: String) {
-        if(verifyUser(user = user, pass = pass)) {
+//        if(verifyUser(user = user, pass = pass)) {
             val disposable = dataSource.autenticLogin(user, pass)
                 .subscribeOn(Schedulers.io())
                 .observeOn((AndroidSchedulers.mainThread()))
                 .subscribeWith(autenticUserObserver)
 
             compositeDisposable.add(disposable)
-        } else {
-            view.displayError("Erro ao acessa")
-        }
+//        } else {
+//            view.displayError("Erro ao acessa")
+//        }
     }
 
     fun verifyUser(user: String, pass: String): Boolean {

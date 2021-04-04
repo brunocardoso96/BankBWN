@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bankaccentur.data.helper.FormatAccont
 import com.example.bankaccentur.data.helper.FormatBalance
 import dominando.android.bankbwn.R
-import dominando.android.bankbwn.data.model.RemoteDataSourceLogin
 import dominando.android.bankbwn.data.model.RemoteDataSourceStatement
 import dominando.android.bankbwn.data.model.statement.StatementResponse
 import dominando.android.bankbwn.statement.Statement
@@ -19,6 +18,8 @@ import kotlinx.android.synthetic.main.activity_bank_main_activity.*
 class BankActivity : AppCompatActivity(), Statement.View {
 
     lateinit var presenter: BankPresenter
+
+    lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +35,12 @@ class BankActivity : AppCompatActivity(), Statement.View {
     private fun init() {
         insertUserInfo()
         setupPresenter()
+        findView()
+        initStatementList()
+    }
 
+    fun findView() {
+        recyclerView = findViewById(R.id.recyclerViewPayment)
     }
 
     private fun setupPresenter() {
@@ -45,20 +51,15 @@ class BankActivity : AppCompatActivity(), Statement.View {
     override fun onStop() {
         super.onStop()
         presenter.stop()
+
     }
 
-//    private fun initalizeViewModel() {
-//        viewModel.bankLiveData.observe(this, Observer {
-//            it?.let {statements ->
-//                initalizeRecycler(statements)
-//            }
-//        })
-        val userId = intent.getStringExtra("EXTRA_userId")
-//        viewModel.getStatementLive(userId.toInt())
-//    }
+    private fun initStatementList() {
+        val userId = intent.getStringExtra("EXTRA_userId")!!.toInt()
+        presenter.getStatement(userId)
+    }
 
-    private fun initalizeRecycler(list: List<StatementResponse>) {
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerViewPayment)
+    private fun initRecycler(list: List<StatementResponse>) {
         recyclerView.apply {
             recyclerView.layoutManager = LinearLayoutManager(this@BankActivity, RecyclerView.VERTICAL, false)
             recyclerView.adapter = BankAdapter(list)
@@ -68,7 +69,11 @@ class BankActivity : AppCompatActivity(), Statement.View {
     private fun insertUserInfo() {
         textViewName.setText(intent.getStringExtra("EXTRA_name"))
         textViewAgency.setText(intent.getStringExtra("EXTRA_agency"))
-        textViewBankAccount.setText(FormatAccont.format(intent.getStringExtra("EXTRA_bankAccount")))
-        textViewBalance.setText(FormatBalance.format(intent.getStringExtra("EXTRA_balance")))
+        textViewBankAccount.setText(FormatAccont.format(intent.getStringExtra("EXTRA_bankAccount").toString()))
+        textViewBalance.setText(FormatBalance.format(intent.getStringExtra("EXTRA_balance").toString()))
+    }
+
+    override fun displayStatement(statementList: List<StatementResponse>) {
+        initRecycler(statementList)
     }
 }
