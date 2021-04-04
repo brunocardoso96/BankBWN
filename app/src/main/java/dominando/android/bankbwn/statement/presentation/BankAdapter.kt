@@ -1,4 +1,4 @@
-package dominando.android.bankbwn.statement.presentation.adapter
+package dominando.android.bankbwn.statement.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

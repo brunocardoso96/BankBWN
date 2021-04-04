@@ -11,7 +11,6 @@ import com.example.bankaccentur.data.helper.FormatBalance
 import dominando.android.bankbwn.R
 import dominando.android.bankbwn.data.model.statement.StatementResponse
 import dominando.android.bankbwn.statement.Statement
-import dominando.android.bankbwn.statement.presentation.adapter.BankAdapter
 import kotlinx.android.synthetic.main.activity_bank_main_activity.*
 
 class BankActivity : AppCompatActivity(), Statement.View {

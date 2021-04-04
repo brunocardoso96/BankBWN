@@ -25,18 +25,22 @@ class UserPresenter(
     }
 
     override fun getAutenticLogin(user: String, pass: String) {
-        RetrofitClient.serviceLogin.postAutenticUser(user, pass).enqueue(object: Callback<UserAccountResponse> {
-            override fun onResponse(call: Call<UserAccountResponse>, response: Response<UserAccountResponse>) {
-                response.body()?.let { userAccountResponse ->
-                    val user = userAccountResponse.userAccount
-                    view.getUser(user)
+        if(verifyUser(user, pass)){
+            RetrofitClient.serviceLogin.postAutenticUser(user, pass).enqueue(object: Callback<UserAccountResponse> {
+                override fun onResponse(call: Call<UserAccountResponse>, response: Response<UserAccountResponse>) {
+                    response.body()?.let { userAccountResponse ->
+                        val user = userAccountResponse.userAccount
+                        view.getUser(user)
+                    }
                 }
-            }
-            override fun onFailure(call: Call<UserAccountResponse>, t: Throwable) {
-                view.displayError("Erro ao acessa o LOGIN")
-            }
+                override fun onFailure(call: Call<UserAccountResponse>, t: Throwable) {
+                    view.displayError("Erro ao acessa o LOGIN")
+                }
 
-        })
+            })
+        } else {
+            view.displayError("Erro ao acessa o usuario")
+        }
     }
 
     fun verifyUser(user: String, pass: String): Boolean {

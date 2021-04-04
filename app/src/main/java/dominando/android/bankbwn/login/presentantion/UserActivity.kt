@@ -40,7 +40,7 @@ class UserActivity : AppCompatActivity(), Login.View {
 
     fun loginclickButton() {
         buttonLogin.setOnClickListener{
-            presenter.getAutenticLogin(user = "brunowcnascimento@gmail.com", pass = "@Aa2")
+            presenter.getAutenticLogin(user = textViewUser.text.toString(), pass = textViewPass.text.toString())
         }
     }
 
