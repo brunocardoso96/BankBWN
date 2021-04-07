@@ -1,7 +1,6 @@
 package dominando.android.bankbwn.login
 
-import com.example.bankaccentur.data.model.UserResponse
-import dominando.android.bankbwn.data.model.login.UserAccountResponse
+import dominando.android.bankbwn.data.model.login.UserResponse
 
 interface Login {
 

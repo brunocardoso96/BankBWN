@@ -1,6 +1,5 @@
 package dominando.android.bankbwn.data.model.login
 
-import com.example.bankaccentur.data.model.UserResponse
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

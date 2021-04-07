@@ -39,6 +39,7 @@ class BankPresenter(
                 }
             }
             override fun onFailure(call: Call<StatementListResponse>, t: Throwable) {
+                Log.i(TAG, "Erro na API")
             }
         })
 

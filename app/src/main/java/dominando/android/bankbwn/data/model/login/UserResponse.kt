@@ -1,4 +1,5 @@
-package com.example.bankaccentur.data.model
+//package com.example.bankaccentur.data.model
+package dominando.android.bankbwn.data.model.login
 
 import com.squareup.moshi.JsonClass
 

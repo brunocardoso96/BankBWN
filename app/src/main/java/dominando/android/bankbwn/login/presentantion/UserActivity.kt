@@ -5,8 +5,8 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.example.bankaccentur.data.model.UserResponse
 import dominando.android.bankbwn.R
+import dominando.android.bankbwn.data.model.login.UserResponse
 import dominando.android.bankbwn.login.Login
 import dominando.android.bankbwn.statement.presentation.BankActivity
 import kotlinx.android.synthetic.main.activity_user.*
@@ -40,7 +40,7 @@ class UserActivity : AppCompatActivity(), Login.View {
 
     fun loginclickButton() {
         buttonLogin.setOnClickListener{
-            presenter.getAutenticLogin(user = textViewUser.text.toString(), pass = textViewPass.text.toString())
+            presenter.getAutenticLogin(user = "brunowcnascimento@gmail.com", pass = "@A2s")
         }
     }
 

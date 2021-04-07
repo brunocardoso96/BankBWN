@@ -17,6 +17,7 @@ object RetrofitClient {
 
     val serviceStatement = Retrofit.Builder()
         .baseUrl(BANK_BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
         .create(BankAPI::class.java)
